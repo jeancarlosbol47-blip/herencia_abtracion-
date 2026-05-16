@@ -1,0 +1,26 @@
+from abc import ABC, abstractmethod
+
+# Clase abstracta
+class Vehiculo(ABC):
+    def __init__(self, marca):
+        self.marca = marca
+
+    @abstractmethod
+    def describir_transporte(self):
+        pass
+
+# Subclase
+class Bicicleta(Vehiculo):
+    def __init__(self, marca, num_cambios):
+        super().__init__(marca)
+        self.num_cambios = num_cambios
+
+    def describir_transporte(self):
+        print(f"Bicicleta marca {self.marca} con {self.num_cambios} cambios")
+
+# Pruebas
+bici1 = Bicicleta("GW", 21)
+bici2 = Bicicleta("Trek", 18)
+
+bici1.describir_transporte()
+bici2.describir_transporte()
