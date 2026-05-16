@@ -1,0 +1,47 @@
+from abc import ABC, abstractmethod
+
+class Notificacion(ABC):
+    def __init__(self, destinatario):
+        self.destinatario = destinatario
+
+    @abstractmethod
+    def enviar(self):
+        pass
+
+    @abstractmethod
+    def formato_mensaje(self):
+        pass
+
+class NotificacionEmail(Notificacion):
+    def __init__(self, destinatario, asunto):
+        super().__init__(destinatario)
+        self.asunto = asunto
+
+    def formato_mensaje(self):
+        return f"Email para {self.destinatario} - Asunto: {self.asunto}"
+
+    def enviar(self):
+        print("Enviando Email...")
+        print(self.formato_mensaje())
+
+class NotificacionSMS(Notificacion):
+    def __init__(self, destinatario, numero):
+        super().__init__(destinatario)
+        self.numero = numero
+
+    def formato_mensaje(self):
+        return f"SMS para {self.destinatario} al número {self.numero}"
+
+    def enviar(self):
+        print("Enviando SMS...")
+        print(self.formato_mensaje())
+
+# Pruebas
+email = NotificacionEmail("juan@email.com", "Bienvenido")
+sms = NotificacionSMS("Carlos", "3001234567")
+
+print(email.formato_mensaje())
+email.enviar()
+
+print(sms.formato_mensaje())
+sms.enviar()
