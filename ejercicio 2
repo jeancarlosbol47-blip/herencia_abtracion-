@@ -1,0 +1,54 @@
+from abc import ABC, abstractmethod
+
+# Clase normal
+class Habitacion:
+    def __init__(self, numero, tipo, precio_noche):
+        self.numero = numero
+        self.tipo = tipo
+        self.precio_noche = precio_noche
+
+# Clase abstracta
+class Reserva(ABC):
+    def __init__(self, cliente, habitacion, noches):
+        self.cliente = cliente
+        self.habitacion = habitacion
+        self.noches = noches
+
+    @abstractmethod
+    def calcular_total(self):
+        pass
+
+    @abstractmethod
+    def confirmar(self):
+        pass
+
+# Subclase Estándar
+class ReservaEstandar(Reserva):
+    def calcular_total(self):
+        return self.habitacion.precio_noche * self.noches
+
+    def confirmar(self):
+        total = self.calcular_total()
+        print(f"Reserva estándar confirmada para {self.cliente}")
+        print(f"Habitación {self.habitacion.numero} - Total: ${total}")
+
+# Subclase VIP
+class ReservaVIP(Reserva):
+    def calcular_total(self):
+        costo_base = self.habitacion.precio_noche * self.noches
+        desayuno = 25000 * self.noches
+        return costo_base + desayuno
+
+    def confirmar(self):
+        total = self.calcular_total()
+        print(f"Reserva VIP confirmada para {self.cliente}")
+        print(f"Habitación {self.habitacion.numero} - Total con desayuno: ${total}")
+
+# Pruebas
+habitacion1 = Habitacion(101, "Sencilla", 80000)
+
+reserva1 = ReservaEstandar("Juan", habitacion1, 3)
+reserva2 = ReservaVIP("María", habitacion1, 3)
+
+reserva1.confirmar()
+reserva2.confirmar()
